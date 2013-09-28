@@ -6,9 +6,8 @@ read -r -p "Author > "
 author=${REPLY}
 title_clean="$(<<< "$title" \
     iconv -f utf8 -t ascii//translit \
-    | tr '[:upper:]' '[:lower:]' \
-    | tr -dc 'a-z0-9. _-' \
-    | tr ' ' '-')"
+    | tr ' [:upper:]' '-[:lower:]' \
+    | tr -dc 'a-z0-9._-')"
 
 filename="$(date "+%Y-%m-%d")-$title_clean.md"
 echo "---
