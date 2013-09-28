@@ -7,3 +7,6 @@
 /site
 /site.hi
 /site.o
+
+# Secret files
+/publish/password.sftp

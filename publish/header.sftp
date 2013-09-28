@@ -1,0 +1,3 @@
+spawn sftp ascii@ascii.univ-nantes.prive
+expect "password:"
+send "
