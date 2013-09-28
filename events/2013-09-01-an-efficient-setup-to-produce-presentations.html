@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site de l'ASCII, association des
+				      étudiants d'Informatique de
+				      l'Université de Nantes.">
+    <meta name="author" content="ASCII">
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+
+    <title>ASCII | An efficient setup to produce presentations</title>
+
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="../assets/css/custom.css" rel="stylesheet">
+  </head>
+
+  <body>
+    
+    <div id="wrap">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="../index.html">ASCII</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+		<a href="../index.html">
+		  Accueil
+		</a>
+	      </li>
+              <li>
+		<a href="../events.html">
+		  Confs &amp; Événements
+		</a>
+	      </li>
+              <li>
+		<a href="../help.html">
+		  Entre-aide
+		</a>
+	      </li>
+              <li>
+		<a href="../about.html">
+		  À propos
+		</a>
+	      </li>
+              <li>
+		<a href="../contact.html">
+		  Contact
+		</a>
+	      </li>
+              <li>
+		<a href="../feed.html">
+		  Feed
+		</a>
+	      </li>
+            </ul>
+          </div>
+	</div>
+      </div>
+      
+      <div class="container main-content">
+<h1>An efficient setup to produce presentations</h1>
+
+<div class="text-muted info">
+    Posté le 01/09/2013
+    
+        par Mog
+    
+</div>
+
+<p>Recently I had to write several presentations and I wasn’t happy with the tools I was used to (<a href="https://en.wikipedia.org/wiki/Beamer_%28LaTeX%29">Beamer</a> + <a href="https://www.gnu.org/software/auctex/">AUCTeX</a>).</p>
+<p>I read a little bit about what my friends were currently using and gave a try to <a href="http://www.bortzmeyer.org/logiciel-presentation-nouveau.html">several HTML5/CSS3/js solutions</a>. The one that impressed me the most was <a href="http://paulrouget.com/dzslides/">DZSlides</a> by Paul Rouget, especially for its awesome control panel (called shell in the DZSlides doc). Even the basic <code>onstage.html</code> one, provided with the vanilla framework, gives you lots of tools to work with: a preview of the next slide, a timer and notes hidden from the slides to help you out during the presentation.</p>
+<p>The basics of DZSlides are simple: you complete an HTML template with your slides (specified with regular HTML5 and CSS3), and use a shell (another html file), to launch a presentation. For example, if your presentation file is <code>slides.html</code> and if you want to use the <code>onstage.html</code> shell, you’d have to browse to the address <code>onstage.html#slides.html</code>.</p>
+<p>The main problem with that particular framework from my perspective was quite embarassing: it required a good habit of producing HTML5 and CSS3 to be productive, and those are two technologies I barely touched recently.</p>
+<p>Here enters <a href="http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html">Pandoc</a> and its ability to turn Markdown into several presentation frameworks outputs. The page linked provides a quick and sufficient introduction on the specifics of Pandoc’s Markdown conversion semantics. Here is a sample command to compile a markdown file into a DZSlides presentation:</p>
+<pre class="shell"><code>pandoc --smart --standalone \
+       --from markdown_github+pandoc_title_block \
+       --to dzslides \
+       input.md \
+       --output.html</code></pre>
+<p>However, the default styling isn’t very good. Something you can do is retrieve the CSS from one of Paul Rouget’s sample presentations and integrate it in the template used by Pandoc, or roll one of your own. To get the current template used by pandoc, use:</p>
+<pre class="shell"><code>pandoc -D dzslides &gt; template.html</code></pre>
+<p>Then it is just a matter of finding the appropriate <code>style</code> section and replacing it with a fancier one. To use the new template during compilation, we just need to add an argument:</p>
+<pre class="shell"><code>pandoc --smart --standalone \
+       --from markdown_github+pandoc_title_block \
+       --to dzslides \
+       --template template.html \
+       input.md \
+       --output.html</code></pre>
+<p>Now that we have a nice Markdown to slideshow converter, let’s look more in depth at the workflow in use. Currently we need to edit a Markdown file, compile an html presentation from it using Pandoc and refresh a webpage to see the result of our modifications. That’s three steps. A quick fix to the need of html compilation is to use <a href="https://github.com/rvoicilas/inotify-tools/wiki">inotify-tools</a> in order to know when the file changes to compile it automatically. Then, to avoid refreshing the shell webpage, we can use an add-on such as <a href="https://addons.mozilla.org/en-us/firefox/addon/auto-reload/">AutoReload</a> to save another action. To ease the combination of those tools, we can use a Makefile as follows:</p>
+<pre class="shell"><code>markdown = $(shell ls *.md)
+html = $(markdown:.md=.html)
+onstaged = $(html:%=onstage.html\#%)
+
+all: $(html)
+
+%.html: %.md
+	pandoc \
+		--smart --standalone \
+		--from markdown_github+pandoc_title_block \
+		--to dzslides \
+		--template template.html \
+		$&lt; \
+		--output $@
+	touch onstage.html
+
+view: $(html)
+	firefox $(onstaged)
+	while :; do inotifywait -qqe modify $(markdown); make; done
+
+.PHONY: all view</code></pre>
+<p>The <code>touch</code> after the compilation is needed to say to the web browser that our shell needs to be reloaded.</p>
+<p>With this Makefile and the refresher add-on combined, the workflow is straightforward: at the beginning of a session, fire up a terminal and do a</p>
+<pre><code>make view</code></pre>
+<p>in the presentation directory.</p>
+<p>Afterwards, the presentation page is refreshed after each modification and is written in an intuitive and efficient language, e.g. Markdown.</p>
+<p>Is it the end of our process streamlining? Sadly no. At each automatic refresh, the navigation information is lost and the presentation comes back to its start. To fix that, there’s no way around patching DZSlides. Hopefully, it was written with customization in mind and it’s a trivial matter: by using the shell onstage-cookie-refresh present in <a href="https://github.com/Mogzor/dzslides">my DZSlides fork</a>, DZSlides will now look for a cookie that has the navigation info saved up and use it if available.</p>
+<p>Our quest comes to an end and there’s nothing left to complain about so I guess I have no excuse to postpone the actual presentation making! :)</p>
+
+</div>
+
+      <div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">Ce site a été généré par
+	  <a href="http://jaspervdj.be/hakyll/">Hakyll</a>
+	  et est disponible sous une licence
+	  <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+	    Creative Commons Attribution-ShareAlike 3.0 Unported
+	    License</a>.
+	</p>
+      </div>
+    </div>
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.js"></script>
+  </body>
+</html>
