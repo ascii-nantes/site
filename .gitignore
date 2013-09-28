@@ -1,0 +1,9 @@
+# Temp files
+*~
+
+# Build files
+/_cache/*
+/_site/*
+/site
+/site.hi
+/site.o
