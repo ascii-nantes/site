@@ -2,6 +2,10 @@
     $for(events)$
         <li>
             <a href="$url$">$title$</a> - $date$
+	    <hr>
+	    $if(teaser)$
+	    $teaser$
+	    $endif$
         </li>
     $endfor$
 </ul>

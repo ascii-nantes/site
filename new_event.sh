@@ -9,10 +9,10 @@ title_clean="$(<<< "$title" \
     | tr ' [:upper:]' '-[:lower:]' \
     | tr -dc 'a-z0-9._-')"
 
-filename="$(date "+%Y-%m-%d")-$title_clean.md"
+filename="events/$(date "+%Y-%m-%d")-$title_clean.md"
 echo "---
 title: $title
 author: $author
----" > "posts/$filename"
+---" > "$filename"
 
-emacs "posts/$filename" &
+emacs "$filename" &

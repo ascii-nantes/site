@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Data.Monoid ( (<>) )
 import           Hakyll
 import           System.FilePath (takeBaseName)
 
@@ -34,7 +34,7 @@ main = hakyll $ do
             path <- getResourceFilePath
             let baseName    = takeBaseName path
                 staticCtx     =
-                    constField (baseName ++ "Active") "true"  `mappend`
+                    constField (baseName ++ "Active") "true"  <>
                     defaultContext
             pandocCompiler
                 >>= loadAndApplyTemplate "templates/container.html" staticCtx
@@ -45,10 +45,9 @@ main = hakyll $ do
         route   $ gsubRoute "static/" (const "")
         compile $ do
             path <- getResourceFilePath
-            let baseName    = takeBaseName path
-                staticCtx     =
-                    constField (baseName ++ "Active") "true"  `mappend`
-                    defaultContext
+            let baseName  = takeBaseName path
+                staticCtx = constField (baseName ++ "Active") "true" <>
+                                defaultContext
             getResourceBody
                 >>= loadAndApplyTemplate "templates/structure.html" staticCtx
                 >>= relativizeUrls
@@ -67,13 +66,14 @@ main = hakyll $ do
         compile $ do
             events <- recentFirst =<< loadAll "events/*"
             let eventsCtx =
-                    listField  "events" eventCtx (return events) `mappend`
-                    constField "eventsActive" "true"             `mappend`
-                    constField "title" "Confs & Events"          `mappend`
+                    listField  "events" eventCtx (return events) <>
+                    constField "eventsActive" "true"             <>
+                    constField "title" "Confs & Events"          <>
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/events.html"    eventsCtx
+                >>= loadAndApplyTemplate "templates/events-list.html"
+                        (teaserField "teaser" "content" <> eventsCtx)
                 >>= loadAndApplyTemplate "templates/container.html" eventsCtx
                 >>= loadAndApplyTemplate "templates/structure.html" eventsCtx
                 >>= relativizeUrls
@@ -81,7 +81,7 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = eventCtx `mappend` bodyField "description"
+            let feedCtx = eventCtx <> bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "events/*" "content"
             renderAtom feedConfiguration feedCtx posts
@@ -89,7 +89,7 @@ main = hakyll $ do
     create ["rss.xml"] $ do
         route idRoute
         compile $ do
-            let feedCtx = eventCtx `mappend` bodyField "description"
+            let feedCtx = eventCtx <> bodyField "description"
             posts <- fmap (take 10) . recentFirst =<<
                 loadAllSnapshots "events/*" "content"
             renderRss feedConfiguration feedCtx posts
@@ -99,9 +99,7 @@ main = hakyll $ do
 
 --------------------------------------------------------------------------------
 eventCtx :: Context String
-eventCtx =
-    dateField "date" "%d/%m/%Y" `mappend`
-    defaultContext
+eventCtx = dateField "date" "%d/%m/%Y" <> defaultContext
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
