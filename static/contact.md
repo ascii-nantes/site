@@ -12,18 +12,18 @@ Bureau
 
 <dl class="dl-horizontal">
   <dt>Président</dt>
-  <dd>[Hugo Mougard][2], M2 ATAL</dd>
+  <dd>[Hugo Mougard][2], [M2 ATAL][6]</dd>
   <dt>Trésorier</dt>
-  <dd>[Grégoire Jadi][3], M2 ATAL</dd>
+  <dd>[Grégoire Jadi][3], [M2 ATAL][6]</dd>
   <dt>Secrétaire</dt>
-  <dd>[Rémi Bois][4], M2 ATAL</dd>
+  <dd>[Rémi Bois][4], [M2 ATAL][6]</dd>
 </dl>
 
 Local
 -----
 
-Entre la cafét et les amphis F, G & H. Situé exactement sur le point
-13 :
+Entre la cafétéria et les amphis F, G & H, le local est situé
+exactement sous le point 13 :
 
 ![Plan du campus --- crédits Université de Nantes][5]
 
@@ -33,3 +33,4 @@ Entre la cafét et les amphis F, G & H. Situé exactement sur le point
 [4]: mailto:remi.bois@etu.univ-nantes.fr
 [5]: /assets/img/map.png
      "Le local est situé au point 13"
+[6]: http://www.dpt-info.univ-nantes.fr/1326208903095/0/fiche___pagelibre/
