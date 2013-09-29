@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
+  <style type="text/css">code{white-space: pre;}</style>
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$if(css)$
+$for(css)$
+  <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+$else$
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+<style>
+  html { background-color: black; }
+  a { color: #FF0066; } a:hover {text-decoration: underline;}
+  footer { position: absolute; bottom: 50px; right: 50px; }
+  strong {color: #FF0066}
+  body {
+      font-family: 'Oswald', arial, serif;
+      background-color: #F1F1F1;
+      color: #1F1F1F;
+      font-size: 2em;
+  }
+
+
+  /* Transition effect */
+  section {
+      -moz-transition: left 400ms linear 0s;
+      -webkit-transition: left 400ms linear 0s;
+      -ms-transition: left 400ms linear 0s;
+      transition: left 400ms linear 0s;
+      background-color: #F1F1F1;
+  }
+  section { left: -150%; }
+  section[aria-selected] { left: 0; }
+  section[aria-selected] ~ section { left: +150% }
+
+  .chapter { background-color: black;}
+  .chapter h1 {line-height: 600px; vertical-align: middle; margin: 0; text-align: center; display: block}
+
+  h1 {
+      margin-top: 20px;
+      margin-left: 160px;
+      color: #FF0066;
+      font-size: 20px;
+      text-align: left;
+  }
+  section.titleslide > h1 {
+      margin: 200px 100px 0 0;
+      color: #FF0066;
+      font-size: 50px;
+      text-shadow: 0px -1px 0px #000;
+      text-align: right;
+  }
+  h1.title {
+      margin: 30px 100px 0 100px;
+      color: #FF0066;
+      font-size: 50px;
+      text-shadow: 0px -1px 0px #000;
+      text-align: left;
+  }
+  h2 {
+      margin: 10px 0 0 50px;
+      color: #FF0066;
+      font-size: 20px;
+      text-align: left;
+  }
+  h2.author {
+      color: #A1A1A1;
+      margin: 30px 0 0 0;
+      text-align: center;
+      font-size: 40px;
+  }
+  h3 {
+      color: #A1A1A1;
+      font-size: 30px;
+      margin: 10px 0 0 100px;
+      text-align: left;
+  }
+  h3.date {
+      color: black;
+      margin: 30px 0px 0 200px;
+      font-size: 30px;
+  }
+  ul {
+      margin-top: 30px;
+      font-size: 30px;
+      text-align: right;
+      border-right: 4px solid #FF0066;
+      padding-right: 40px;
+      min-width: 310px;
+      margin-left: 50px;
+      display: inline-block;
+  }
+  q, p {
+      margin: 30px auto 0 auto;
+      width: 700px;
+  }
+  q:after {content: ""}
+  q:before {content: ""}
+  q {
+      display: block;
+      margin-top: 50px;
+  }
+  pre {
+      margin: 30px auto 0 auto;
+      width: 600px;
+  }
+  video {
+      position: absolute;
+      top: 210px;
+      width: 260px;
+      left: 445px;
+      box-shadow: 0 0 10px black;
+  }
+  #arrow {
+      position: absolute;
+      top: 165px;
+      left: 460px;
+      font-size: 100px;
+      color: white;
+
+  }
+  li {list-style-type: none}
+
+</style>
+$endif$
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$if(title)$
+<section>
+  <h1 class="title">$title$</h1>
+$for(author)$
+  <h2 class="author">$author$</h2>
+$endfor$
+  <h3 class="date">$date$</h3>
+</section>
+$endif$
+$for(include-before)$
+$include-before$
+$endfor$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+$dzslides-core$
+</body>
+</html>

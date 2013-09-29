@@ -15,7 +15,7 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "assets/files/*" $ do
+    match "assets/files/**" $ do
         route $ gsubRoute "assets/" (const "") `composeRoutes`
                 idRoute
         compile copyFileCompiler
