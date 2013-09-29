@@ -11,6 +11,8 @@ dix minutes pour présenter le stage réalisé durant l'été. Le clou de
 la rencontre était bien entendu le goûter qui permit de réunir tout le
 monde autour d'un morceau de gâteau.
 
+<div></div><!--more-->
+
 ![Joseph parle de son stage à Dictanova][2]
 
 Pour les étudiants qui présentaient leur stage, ce fut l'occasion de

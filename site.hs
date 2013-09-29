@@ -66,16 +66,17 @@ main = hakyll $ do
         compile $ do
             events <- recentFirst =<< loadAll "events/*"
             let eventsCtx =
-                    listField  "events" eventCtx (return events) <>
-                    constField "eventsActive" "true"             <>
-                    constField "title" "Confs & Events"          <>
+                    listField  "events"
+                               (teaserField "teaser" "content" <> eventCtx)
+                               (return events)                              <>
+                    constField "eventsActive" "true"                        <>
+                    constField "title" "Confs & Events"                     <>
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/events-list.html"
-                        (teaserField "teaser" "content" <> eventsCtx)
-                >>= loadAndApplyTemplate "templates/container.html" eventsCtx
-                >>= loadAndApplyTemplate "templates/structure.html" eventsCtx
+                >>= loadAndApplyTemplate "templates/events.html"      eventsCtx
+                >>= loadAndApplyTemplate "templates/container.html"   eventsCtx
+                >>= loadAndApplyTemplate "templates/structure.html"   eventsCtx
                 >>= relativizeUrls
 
     create ["atom.xml"] $ do
