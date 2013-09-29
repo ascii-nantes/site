@@ -8,12 +8,12 @@ body {
     margin-bottom: 20px;
 }
 
-.caption {
+.main-content img {
+    margin-top: 20px;
+}
+
+.main-content .caption {
     font-style: italic;
     color: #999999;
     margin-bottom: 20px;
-}
-
-img {
-    margin-top: 20px;
 }
