@@ -8,20 +8,16 @@ import           System.FilePath (takeBaseName)
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
-    match "assets/ico/*" $ do
+    match (    "assets/ico/*"
+          .||. "assets/img/*"
+          .||. "assets/js/*"
+          .||. "assets/ico/*" ) $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "assets/img/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "assets/js/*" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-    match "files/*" $ do
-        route   idRoute
+    match "assets/files/*" $ do
+        route $ gsubRoute "assets/" (const "") `composeRoutes`
+                idRoute
         compile copyFileCompiler
 
     match "assets/css/*" $ do
@@ -29,13 +25,13 @@ main = hakyll $ do
         compile compressCssCompiler
 
     match "static/*.md" $ do
-        route   $ gsubRoute "static/" (const "") `composeRoutes` setExtension "html"
+        route   $ gsubRoute "static/" (const "") `composeRoutes`
+                  setExtension "html"
         compile $ do
             path <- getResourceFilePath
-            let baseName    = takeBaseName path
-                staticCtx     =
-                    constField (baseName ++ "Active") "true"  <>
-                    defaultContext
+            let baseName  = takeBaseName path
+                staticCtx = constField (baseName ++ "Active") "true"  <>
+                            defaultContext
             pandocCompiler
                 >>= loadAndApplyTemplate "templates/container.html" staticCtx
                 >>= loadAndApplyTemplate "templates/structure.html" staticCtx
@@ -47,13 +43,13 @@ main = hakyll $ do
             path <- getResourceFilePath
             let baseName  = takeBaseName path
                 staticCtx = constField (baseName ++ "Active") "true" <>
-                                defaultContext
+                            defaultContext
             getResourceBody
                 >>= loadAndApplyTemplate "templates/structure.html" staticCtx
                 >>= relativizeUrls
 
     match "events/*" $ do
-        route $ setExtension "html"
+        route   $ setExtension "html"
         compile $ pandocCompiler
                 >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/event.html"     eventCtx
@@ -70,13 +66,13 @@ main = hakyll $ do
                                (teaserField "teaser" "content" <> eventCtx)
                                (return events)                              <>
                     constField "eventsActive" "true"                        <>
-                    constField "title" "Confs & Events"                     <>
+                    constField "title"        "Confs & Events"              <>
                     defaultContext
 
             makeItem ""
-                >>= loadAndApplyTemplate "templates/events.html"      eventsCtx
-                >>= loadAndApplyTemplate "templates/container.html"   eventsCtx
-                >>= loadAndApplyTemplate "templates/structure.html"   eventsCtx
+                >>= loadAndApplyTemplate "templates/events.html"    eventsCtx
+                >>= loadAndApplyTemplate "templates/container.html" eventsCtx
+                >>= loadAndApplyTemplate "templates/structure.html" eventsCtx
                 >>= relativizeUrls
 
     create ["atom.xml"] $ do
