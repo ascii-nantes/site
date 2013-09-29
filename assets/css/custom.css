@@ -7,3 +7,13 @@ body {
     font-style: italic;
     margin-bottom: 20px;
 }
+
+.caption {
+    font-style: italic;
+    color: #999999;
+    margin-bottom: 20px;
+}
+
+img {
+    margin-top: 20px;
+}
