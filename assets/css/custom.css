@@ -12,6 +12,10 @@ body {
     margin-top: 20px;
 }
 
+.text-content {
+    text-align: justify;
+}
+
 .main-content .caption {
     font-style: italic;
     color: #999999;
