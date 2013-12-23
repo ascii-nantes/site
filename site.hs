@@ -11,7 +11,8 @@ main = hakyll $ do
     match (    "assets/ico/*"
           .||. "assets/img/*"
           .||. "assets/js/*"
-          .||. "assets/ico/*" ) $ do
+          .||. "assets/ico/*"
+          .||. "events/*/**") $ do
         route   idRoute
         compile copyFileCompiler
 
