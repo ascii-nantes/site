@@ -15,4 +15,4 @@ title: $title
 author: $author
 ---" > "$filename"
 
-emacs "$filename" &
+vim "$filename" 

@@ -12,11 +12,11 @@ Bureau
 
 <dl class="dl-horizontal">
   <dt>Président</dt>
-  <dd>[Hugo Mougard][2], [M2 ATAL][6]</dd>
+  <dd>[William Benaïssa][2]</dd>
   <dt>Trésorier</dt>
-  <dd>[Grégoire Jadi][3], [M2 ATAL][6]</dd>
+  <dd>[Adélys Lévy][3]</dd>
   <dt>Secrétaire</dt>
-  <dd>[Rémi Bois][4], [M2 ATAL][6]</dd>
+  <dd>[Valentin Hénique][4]</dd>
 </dl>
 
 Local
@@ -33,4 +33,3 @@ exactement sous le point 13 :
 [4]: mailto:remi.bois@etu.univ-nantes.fr
 [5]: /assets/img/map.png
      "Le local est situé au point 13"
-[6]: http://www.dpt-info.univ-nantes.fr/1326208903095/0/fiche___pagelibre/
