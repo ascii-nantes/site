@@ -14,9 +14,6 @@ quotidien.
 
 Nous avons donc envahi la cafétéria de 17h à presque 19h.
 
-<img src="/events/2013-12-23-rencontre-avec-les-doctorants-du-labo-dinformatique/1.jpg"
-    style="width: 100%;">
-
 Les points abordés ont été nombreux. Parmi eux :
 
 - la diversité de l'activité pendant une thèse ;
@@ -26,9 +23,6 @@ Les points abordés ont été nombreux. Parmi eux :
 - comment trouver une thèse ;
 - quels sont les principaux modes de travail ;
 - etc.
-
-<img src="/events/2013-12-23-rencontre-avec-les-doctorants-du-labo-dinformatique/2.jpg"
-    style="width: 100%;">
 
 Bien sûr, une réunion de l'ASCII sans trucs à manger ne serait pas
 vraiment une réunion de l'ASCII, donc on a fini la séance par un
