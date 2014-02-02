@@ -6,6 +6,8 @@ Ce site utilise HTML/Markdown via Jekyll.
 
 `gem install jekyll`
 
+idem avec `redcarpet` et `pygments` pour, respectivement, markdown et la coloration syntaxique.
+
 ## Générer le site
 
 `jekyll ; jekyll serve` ou simplement `jekyll serve --watch` pour générer
