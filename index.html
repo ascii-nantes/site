@@ -1,0 +1,21 @@
+---
+layout: default
+title: ASCII ♥
+---
+
+<div id="home">
+  <h1>ASCII ♥</h1>
+
+<p>Association étudiante, mais association sérieuse. Nous cherchons à
+  partager notre hobby pour l'informatique, du plus simple au plus
+  complexe. Vous trouverez sur ce site les dernières nouvelles de notre
+  association, ainsi que de nombreuses informations complémentaires sur
+  <a href="/about">nos activités.</a></p>
+
+  <h1>Dernières nouvelles</h1>
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
